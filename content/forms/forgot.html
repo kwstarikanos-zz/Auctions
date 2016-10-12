@@ -1,0 +1,37 @@
+<div class="container" style="margin-top:30px">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <strong>Password restore...</strong>
+                </h3>
+                <div style="float:right; font-size: 90%; position: relative; top:-15px">
+                    <strong><a href="#/login">Cancel</a></strong>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <form id="forgot" name="forgot" novalidate role="form" ng-submit="submit()" class="css-form">
+                    <div ng-show="message" class="alert alert-danger">
+                        <span class="close" data-dismiss="alert">×</span>{{message}}
+                    </div>
+
+                    <div style="margin-bottom: 12px" class="input-group">
+                        <label class="input-group-addon" for="user"><i class="glyphicon glyphicon-user"></i></label>
+                        <input id="user" name="user" type="text" class="form-control" ng-model="user"
+                               placeholder="Username Or Email" required username-pattern>
+                    </div>
+
+                    <!--BUTTON: Submit-->
+                    <button ng-disabled="forgot.$invalid" type="submit" class="btn btn-success">Restore</button>
+                    <hr style="margin-top:10px;margin-bottom:10px;">
+                    <div class="form-group">
+                        <div style="font-size:85%">
+                            After this process you will be prompted to change your password.
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

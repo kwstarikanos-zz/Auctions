@@ -1,0 +1,13 @@
+<div ng-include="'welcome.html'"></div>
+
+<div class="center">
+
+    <table>
+        <tr ng-repeat="x in names">
+            <td>{{ x.Name }}</td>
+            <td>{{ x.City }}</td>
+            <td>{{ x.Country }}</td>
+        </tr>
+    </table>
+    {{message}}
+</div>
