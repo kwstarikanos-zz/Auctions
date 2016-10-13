@@ -15,6 +15,18 @@
     border-color: #ddd;
 }
 
+/*Tabs*/
+.Auctions md-content {
+    background-color: transparent !important; }
+.Auctions md-content md-tabs {
+    background: #f6f6f6;
+    border: 1px solid #e1e1e1; }
+.Auctions md-content md-tabs md-tabs-wrapper {
+    background: white; }
+.Auctions md-content h1:first-child {
+    margin-top: 0; }
+
+
 /*Forms*/
 
 .col-md-offset-4 {
@@ -23,6 +35,10 @@
 
 .col-md-4 {
     width: 100%;
+}
+
+div#register {
+    border: 1px solid #eeeeee;
 }
 
 .css-form input.ng-invalid {

@@ -3,6 +3,9 @@ function forgot($scope) {
         $scope.message = "You type: " + $scope.user;
     }
 }
+/*Navigation Bar:*/
+app.controller("navbar", function ($scope) {
+});
 
 /*Content: All content (Loggedin|Logout)*/
 app.controller("content", function content($scope, $http) {

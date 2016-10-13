@@ -7,304 +7,335 @@
                 </h3>
             </div>
             <div class="panel-body">
-                <form id="register" name="register" novalidate role="form"
-                      class="css-form" ng-submit="submit()" class="css-form">
-                    <tabset>
+
+                <div id="register">
+                    <form name="register" novalidate role="form"
+                          class="css-form" ng-submit="submit()" class="css-form">
                         <!--ALERT:-->
                         <div ng-show="register.user.agree.$touched && !register.user.agree" class="alert alert-danger">
                             <span class="close" data-dismiss="alert">×</span>
                             <div>Please agree and sign.</div>
                         </div>
+                        <md-content>
+                            <md-tabs md-dynamic-height md-border-bottom>
+                                <md-tab label="Account" ng-form="registerAccountForm">
+                                    <md-content class="md-padding">
+                                        <!--TEXT: Username-->
+                                        <div ng-controller="registerUsernameController" style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="register-username">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </label>
 
-                        <tab heading="Account" ng-form="registerInfoForm">
-                            <!--TEXT: Username-->
-                            <div ng-controller="registerUsernameController" style="margin-bottom: 12px"
-                                 class="input-group">
-                                <label class="input-group-addon" for="register-username">
-                                    <i class="glyphicon glyphicon-user"></i>
-                                </label>
+                                            <input id="register-username" name="username" type="text"
+                                                   class="form-control"
+                                                   placeholder="Username" required ng-model="data.info.username"
+                                                   username-pattern username-validate>
 
-                                <input id="register-username" name="username" type="text" class="form-control"
-                                       placeholder="Username" required ng-model="data.info.username"
-                                       username-pattern username-validate>
+                                            <span ng-hide="!register.username.$touched || register.username.$valid"
+                                                  class='required'>*</span>
 
-                                <span ng-hide="!register.username.$touched || register.username.$valid"
-                                      class='required'>*</span>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.username.$touched || register.username.$dirty) && register.username.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.username.$touched || register.username.$dirty) && register.username.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.username.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.username.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
+                                        <!--PASSWORD: Password-->
+                                        <div ng-controller="registerPasswordController" style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="password">
+                                                <i class="glyphicon glyphicon-lock"></i>
+                                            </label>
+                                            <input id="password" name="password" type="password" password-pattern
+                                                   placeholder="Password" class="form-control" required
+                                                   ng-model="data.info.password">
 
-                            <!--PASSWORD: Password-->
-                            <div ng-controller="registerPasswordController" style="margin-bottom: 12px"
-                                 class="input-group">
-                                <label class="input-group-addon" for="password">
-                                    <i class="glyphicon glyphicon-lock"></i>
-                                </label>
-                                <input id="password" name="password" type="password" password-pattern
-                                       placeholder="Password" class="form-control" required ng-model="data.info.password">
+                                            <span ng-hide="!register.password.$touched || register.password.$valid"
+                                                  class='required'>*</span>
 
-                                <span ng-hide="!register.password.$touched || register.password.$valid"
-                                      class='required'>*</span>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.password.$touched || register.password.$dirty) && register.password.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.password.$touched || register.password.$dirty) && register.password.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.password.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.password.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
+                                        <!--PASSWORD: Password Repeat-->
+                                        <div ng-controller="registerPasswordRepeatController"
+                                             style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="passwordRepeat">
+                                                <i class="glyphicon glyphicon-lock"></i>
+                                            </label>
+                                            <input id="passwordRepeat" name="passwordRepeat" type="password"
+                                                   placeholder="Repeat Password" class="form-control" required
+                                                   password-pattern password-validate
+                                                   ng-model="data.info.password_repeat">
 
-                            <!--PASSWORD: Password Repeat-->
-                            <div ng-controller="registerPasswordRepeatController" style="margin-bottom: 12px"
-                                 class="input-group">
-                                <label class="input-group-addon" for="passwordRepeat">
-                                    <i class="glyphicon glyphicon-lock"></i>
-                                </label>
-                                <input id="passwordRepeat" name="passwordRepeat" type="password"
-                                       placeholder="Repeat Password" class="form-control" required
-                                       password-pattern password-validate ng-model="data.info.password_repeat">
+                                            <span ng-hide="!register.passwordRepeat.$touched || register.passwordRepeat.$valid"
+                                                  class='required'>*</span>
 
-                                <span ng-hide="!register.passwordRepeat.$touched || register.passwordRepeat.$valid"
-                                      class='required'>*</span>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.passwordRepeat.$touched || register.passwordRepeat.$dirty) && register.passwordRepeat.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.passwordRepeat.$touched || register.passwordRepeat.$dirty) && register.passwordRepeat.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.passwordRepeat.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.passwordRepeat.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="User" ng-form="registerUserForm">
+                                    <md-content class="md-padding">
 
-                        </tab>
+                                        <!--TEXT: Firstname-->
+                                        <div ng-controller="registerFirstnameController" style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="firstname">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </label>
+                                            <input id="firstname" name="firstname" type="text" class="form-control"
+                                                   placeholder="First name" required ng-model="data.info.firstname"
+                                                   to-upper-case
+                                                   name-pattern>
 
-                        <tab heading="User" ng-form="registerUserForm">
-                            <!--TEXT: Firstname-->
-                            <div ng-controller="registerFirstnameController" style="margin-bottom: 12px"
-                                 class="input-group">
-                                <label class="input-group-addon" for="firstname">
-                                    <i class="glyphicon glyphicon-user"></i>
-                                </label>
-                                <input id="firstname" name="firstname" type="text" class="form-control"
-                                       placeholder="First name" required ng-model="data.info.firstname" to-upper-case
-                                       name-pattern>
+                                            <span ng-hide="!register.firstname.$touched || register.firstname.$valid"
+                                                  class='required'>*</span>
 
-                                <span ng-hide="!register.firstname.$touched || register.firstname.$valid"
-                                      class='required'>*</span>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.firstname.$touched || register.firstname.$dirty) && register.firstname.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.firstname.$touched || register.firstname.$dirty) && register.firstname.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.firstname.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.firstname.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
+                                        <!--TEXT: Lastname-->
+                                        <div ng-controller="registerLastnameController" style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="lastname">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </label>
+                                            <input id="lastname" name="lastname" type="text" class="form-control"
+                                                   placeholder="Last name" required ng-model="data.info.lastname"
+                                                   to-upper-case
+                                                   name-pattern>
 
-                            <!--TEXT: Lastname-->
-                            <div ng-controller="registerLastnameController" style="margin-bottom: 12px"
-                                 class="input-group">
-                                <label class="input-group-addon" for="lastname">
-                                    <i class="glyphicon glyphicon-user"></i>
-                                </label>
-                                <input id="lastname" name="lastname" type="text" class="form-control"
-                                       placeholder="Last name" required ng-model="data.info.lastname" to-upper-case
-                                       name-pattern>
+                                            <span ng-hide="!register.lastname.$touched || register.lastname.$valid"
+                                                  class='required'>*</span>
 
-                                <span ng-hide="!register.lastname.$touched || register.lastname.$valid"
-                                      class='required'>*</span>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.lastname.$touched || register.lastname.$dirty) && register.lastname.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.lastname.$touched || register.lastname.$dirty) && register.lastname.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.lastname.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.lastname.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
+                                        <!--NUMBER: Vat-->
+                                        <div ng-controller="registerVatController" style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="vat">
+                                                <i class="glyphicon glyphicon-tag"></i>
+                                            </label>
+                                            <input id="vat" name="vat" type="number" class="form-control"
+                                                   min="0" placeholder="Vat ID" required ng-model="data.info.vat">
 
-                            <!--NUMBER: Vat-->
-                            <div ng-controller="registerVatController" style="margin-bottom: 12px" class="input-group">
-                                <label class="input-group-addon" for="vat">
-                                    <i class="glyphicon glyphicon-tag"></i>
-                                </label>
-                                <input id="vat" name="vat" type="number" class="form-control"
-                                       min="0" placeholder="Vat ID" required ng-model="data.info.vat">
+                                            <span ng-hide="!register.vat.$touched || register.vat.$valid"
+                                                  class='required'>*</span>
 
-                                <span ng-hide="!register.vat.$touched || register.vat.$valid" class='required'>*</span>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.vat.$touched || register.vat.$dirty) && register.vat.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.vat.$touched || register.vat.$dirty) && register.vat.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.vat.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.vat.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
-                        </tab>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Contact" ng-form="registerContactForm">
+                                    <md-content class="md-padding">
 
-                        <tab heading="Contact info" ng-form="registerContactForm">
-                            <!--EMAIL: Email-->
-                            <div ng-controller="registerEmailController" style="margin-bottom: 12px"
-                                 class="input-group">
-                                <label class="input-group-addon" for="email">
-                                    <i class="glyphicon glyphicon-envelope"></i>
-                                </label>
-                                <input id="email" name="email" type="email" class="form-control"
-                                       placeholder="Email" required ng-model="data.info.email">
+                                        <!--EMAIL: Email-->
+                                        <div ng-controller="registerEmailController" style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="email">
+                                                <i class="glyphicon glyphicon-envelope"></i>
+                                            </label>
+                                            <input id="email" name="email" type="email" class="form-control"
+                                                   placeholder="Email" required ng-model="data.info.email">
 
-                                <span ng-hide="!register.email.$touched || register.email.$valid"
-                                      class='required'>*</span>
+                                            <span ng-hide="!register.email.$touched || register.email.$valid"
+                                                  class='required'>*</span>
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.email.$touched || register.email.$dirty) && register.email.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.email.$touched || register.email.$dirty) && register.email.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.email.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.email.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                            <!--EMAIL: Email Repeat-->
-                            <div ng-controller="registerEmailRepeatController" style="margin-bottom: 12px"
-                                 class="input-group">
-                                <label class="input-group-addon" for="emailRepeat">
-                                    <i class="glyphicon glyphicon-envelope"></i>
-                                </label>
-                                <input id="emailRepeat" name="emailRepeat" type="email" class="form-control"
-                                       placeholder="Email repeat" required ng-model="data.info.email_repeat">
+                                        <!--EMAIL: Email Repeat-->
+                                        <div ng-controller="registerEmailRepeatController" style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="emailRepeat">
+                                                <i class="glyphicon glyphicon-envelope"></i>
+                                            </label>
+                                            <input id="emailRepeat" name="emailRepeat" type="email" class="form-control"
+                                                   placeholder="Email repeat" required
+                                                   ng-model="data.info.email_repeat">
 
-                                <span ng-hide="!register.emailRepeat.$touched || register.emailRepeat.$valid"
-                                      class='required'>*</span>
+                                            <span ng-hide="!register.emailRepeat.$touched || register.emailRepeat.$valid"
+                                                  class='required'>*</span>
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.emailRepeat.$touched || register.emailRepeat.$dirty) && register.emailRepeat.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.emailRepeat.$touched || register.emailRepeat.$dirty) && register.emailRepeat.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.emailRepeat.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.emailRepeat.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                            <!--TEL: Telephone-->
-                            <div ng-controller="registerTelephoneController" style="margin-bottom: 12px"
-                                 class="input-group">
-                                <label class="input-group-addon" for="telephone">
-                                    <i class="glyphicon glyphicon-phone-alt"></i>
-                                </label>
+                                        <!--TEL: Telephone-->
+                                        <div ng-controller="registerTelephoneController" style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="telephone">
+                                                <i class="glyphicon glyphicon-phone-alt"></i>
+                                            </label>
 
-                                <input id="telephone" type="tel" class="form-control" name="telephone"
-                                       placeholder="Telephone number" required ng-model="data.info.telephone">
+                                            <input id="telephone" type="tel" class="form-control" name="telephone"
+                                                   placeholder="Telephone number" required
+                                                   ng-model="data.info.telephone">
 
-                                <span ng-hide="!register.telephone.$touched || register.telephone.$valid"
-                                      class='required'>*</span>
+                                            <span ng-hide="!register.telephone.$touched || register.telephone.$valid"
+                                                  class='required'>*</span>
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.telephone.$touched || register.telephone.$dirty) && register.telephone.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.telephone.$touched || register.telephone.$dirty) && register.telephone.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.telephone.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
-                        </tab>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.telephone.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                        <tab heading="Address info" ng-form="registerAddressForm">
-                            <!--TEXT: Address-->
-                            <div ng-controller="registerAddressController" style="margin-bottom: 12px"
-                                 class="input-group">
-                                <label class="input-group-addon" for="address">
-                                    <i class="glyphicon glyphicon-home"></i>
-                                </label>
-                                <input id="address" type="text" class="form-control" name="address"
-                                       placeholder="Address" required ng-model="data.info.address">
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Address" ng-form="registerAddressForm">
+                                    <md-content class="md-padding">
 
-                                <span ng-hide="!register.address.$touched || register.address.$valid"
-                                      class='required'>*</span>
+                                        <!--TEXT: Address-->
+                                        <div ng-controller="registerAddressController" style="margin-bottom: 12px"
+                                             class="input-group">
+                                            <label class="input-group-addon" for="address">
+                                                <i class="glyphicon glyphicon-home"></i>
+                                            </label>
+                                            <input id="address" type="text" class="form-control" name="address"
+                                                   placeholder="Address" required ng-model="data.info.address">
 
-                                <!--Danger alert-->
-                                <div class="alert alert-danger input-message" role="alert"
-                                     ng-show="(register.address.$touched || register.address.$dirty) && register.address.$invalid">
-                                    <span ng-bind="alert"></span>
-                                </div>
+                                            <span ng-hide="!register.address.$touched || register.address.$valid"
+                                                  class='required'>*</span>
 
-                                <!--Success alert-->
-                                <div class="alert alert-success input-message" role="alert"
-                                     ng-show="register.address.$valid">
-                                    <span ng-bind="alert"></span>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </div>
-                            </div>
+                                            <!--Danger alert-->
+                                            <div class="alert alert-danger input-message" role="alert"
+                                                 ng-show="(register.address.$touched || register.address.$dirty) && register.address.$invalid">
+                                                <span ng-bind="alert"></span>
+                                            </div>
 
-                            <!--BUTTON: Signup-->
-                            <button id="signup" ng-disabled="register.$invalid" name="signup"
-                                    type="submit" class="btn btn-success">Register
-                            </button>
+                                            <!--Success alert-->
+                                            <div class="alert alert-success input-message" role="alert"
+                                                 ng-show="register.address.$valid">
+                                                <span ng-bind="alert"></span>
+                                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                            </div>
+                                        </div>
 
-                            <!--CHECKBOX: Agree-->
-                            <div style="float:right">
-                                I accept the <a href="#/terms">terms</a> of use:
-                                <input type="checkbox" ng-model="user.agree" name="agree" required/>
-                                <span ng-hide="!register.agree.$touched || register.agree.$valid"
-                                      class='required'>*</span>
-                            </div>
-                        </tab>
-                    </tabset>
-                </form>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Submit" ng-form="registerSubmitForm">
+                                    <md-content class="md-padding">
+                                        <pre>{{data}}</pre>
+                                        <!--BUTTON: Signup-->
+                                        <button id="signup" ng-disabled="register.$invalid" name="signup"
+                                                type="submit" class="btn btn-success">Register
+                                        </button>
 
-                <pre>{{data}}</pre>
+                                        <!--CHECKBOX: Agree-->
+                                        <div style="float:right">
+                                            I accept the <a href="#/terms">terms</a> of use:
+                                            <input type="checkbox" ng-model="user.agree" name="agree" required/>
+                                            <span ng-hide="!register.agree.$touched || register.agree.$valid"
+                                                  class='required'>*</span>
+                                        </div>
+
+                                    </md-content>
+                                </md-tab>
+                            </md-tabs>
+                        </md-content>
+                    </form>
+                </div>
+
+
+
 
                 <hr style="margin-top:10px;margin-bottom:10px;">
 
