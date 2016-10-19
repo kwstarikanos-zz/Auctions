@@ -31,3 +31,8 @@ app.config(function ($locationProvider, $routeProvider) {
         });
 })
 ;
+
+app.config(function($mdIconProvider) {
+    $mdIconProvider
+        .iconSet('communication', 'img/icons/sets/communication-icons.svg', 24);
+})

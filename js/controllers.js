@@ -12,13 +12,13 @@ app.controller("content", function content($scope, $http) {
     $scope.message = "Message from main controller!";
     $scope.connected = true;
 
-    $http.get("http://www.w3schools.com/angular/customers.php").then(function (response) {
-        $scope.names = response.data.records;
-
-
-    });
-
-
+    //$http.get("http://www.w3schools.com/angular/customers.php").then(function (response) {
+    $scope.names = [
+        {Name: "A", City: "A", Country: "A"},
+        {Name: "B", City: "B", Country: "B"},
+        {Name: "C", City: "C", Country: "C"}
+    ]//response.data.records;
+    //});
 });
 
 /*User: Login Form*/
@@ -49,32 +49,75 @@ app.controller("login", function login($scope, $http, $location) {
 });
 
 
-app.controller("register", function login($scope, $http, $location) {
-    $scope.data = {info: {}};
-    $scope.submit = function () {
+app.controller("register", function login($scope, $http, $location, $mdDialog) {
 
-        var req = {
+    $scope.data = {account: {}, user: {}, contact: {}, address: {}};
+
+    $scope.user_tab = true;
+    $scope.contact_tab = true;
+    $scope.address_tab = true;
+    $scope.submit_tab = true;
+
+
+    $scope.nextTab = function () {
+        $scope.selectedIndex++;
+    };
+
+
+    function submit() {
+        $http({
             method: 'POST',
             url: 'http://83.212.118.209/test.php',
-            headers: {'Content-Type': undefined },
-            data: {action: "register", info: $scope.data.info}
-        }
-
-        $http(req).then(function successCallback(response) {
+            headers: {'Content-Type': undefined},
+            data: {action: "register", data: $scope.data}
+        }).then(function successCallback(response) {
             if (response.data.available) {
-                $scope.message = "";
+                $scope.status = "Register successful";
 
                 //Successfull register
-                //$location.path('/content');
+                $location.path('/login');
             }
             else {
-                $scope.message = "Register fail!";
+                $scope.status = "Register fail!";
             }
         }, function errorCallback(response) {
-            $scope.message = "Something went wrong with registration!";
+            $scope.status = "Something went wrong with registration!";
         });
 
     }
+
+    $scope.status = '';
+    $scope.termsDialog = function (event) {
+        $mdDialog.show({
+            controller: function ($scope, $mdDialog) {
+                $scope.hide = function () {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function () {
+                    $mdDialog.cancel();
+                };
+
+                $scope.answer = function (answer) {
+                    $mdDialog.hide(answer);
+                };
+            },
+            templateUrl: 'content/templates/terms.html',
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsideToClose: false,
+            fullscreen: false
+        }).then(
+            function (answer) {
+                if (answer) {
+                    submit();
+                }
+                else {
+                    $scope.status = "You must accept the terms and conditions to complete your registration!";
+                }
+            }
+        );
+    };
 });
 
 
@@ -141,31 +184,5 @@ app.controller("admin", function ($scope) {
     };
 });
 
-/*Register Input Controllers*/
-app.controller("registerUsernameController", function ($scope) {
-});
-app.controller("registerFirstnameController", function ($scope) {
-});
-app.controller("registerLastnameController", function ($scope) {
-});
-app.controller("registerPasswordController", function ($scope) {
-});
-app.controller("registerPasswordRepeatController", function ($scope) {
-});
-app.controller("registerEmailController", function ($scope) {
-});
-app.controller("registerEmailRepeatController", function ($scope) {
-});
-app.controller("registerTelephoneController", function ($scope) {
-});
-app.controller("registerAddressController", function ($scope) {
-});
-app.controller("registerVatController", function ($scope) {
-});
-
 /*User: Forgot Password*/
 app.controller("forgot", forgot);
-
-
-// Code goes here
-
